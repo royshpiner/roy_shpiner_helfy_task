@@ -31,3 +31,26 @@ export const toggleTask = async (id) => {
     }
     return response.json();
 };
+
+export const deleteTask = async (id) => {
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+    });
+    if (!response.ok) {
+        throw new Error("Failed to delete task");
+    }
+};
+
+export const updateTask = async (id, task) => {
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(task),
+    });
+    if (!response.ok) {
+        throw new Error("Failed to update task");
+    }
+    return response.json();
+};
