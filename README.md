@@ -1,1 +1,0 @@
-# roy_shpiner_helfy_task
