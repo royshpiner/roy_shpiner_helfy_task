@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { getTasks } from "./services/taskService";
+import { getTasks, createTask, toggleTask } from "./services/taskService";
 import TaskList from "./components/TaskList";
+import TaskForm from "./components/TaskForm";
+
 
 
 function App() {
@@ -17,11 +19,35 @@ function App() {
         };
         loadTasks();
     }, []);
+    const handleAddTask = async (task) => {
+        try{
+            const newTask = await createTask(task);
+
+            setTasks((currentTasks) => [...currentTasks, newTask]);
+        } catch (error) {
+            console.error("Error creating task:", error);
+        }
+    };
+
+    const handleToggleTask = async (id) => {
+        try{
+            const updatedTask = await toggleTask(id);
+
+            setTasks((currentTasks) => currentTasks.map((task) => task.id === id ? updatedTask : task));
+        } catch (error) {
+            console.error("Error toggling task:", error);
+        }
+    };
+        
 
     return (
         <main>
             <h1>Task Manager</h1>
-            <TaskList tasks={tasks} />
+            <TaskForm onAddTask={handleAddTask} />
+            <TaskList
+                tasks={tasks}
+                onToggleTask={handleToggleTask}
+            />
         </main>
     );
 }

@@ -1,4 +1,4 @@
-function TaskItem({ task }){
+function TaskItem({ task, onToggleTask }){
     return(
     <article>
         <h2>{task.title}</h2>
@@ -8,6 +8,9 @@ function TaskItem({ task }){
         <p>
             Status: {task.completed ? "Completed" : "Pending"}
         </p>
+        <button onClick={()=> onToggleTask(task.id)}>
+            {task.completed ? "mark pending" : "mark completed"}
+        </button>
     </article>
     );
 }
